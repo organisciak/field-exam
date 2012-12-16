@@ -1,0 +1,5 @@
+PDFs
+.DS_Store
+*.*~
+*.pyc
+/code/tfidf/year/*.gz
