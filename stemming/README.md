@@ -1,4 +1,4 @@
-==Stemming==
+#Stemming
 This is a *very* trivial use of stemming, comparing Lancaster (Paice 1990), Porter (Porter 1981), and English Snowball (Porter 2001) stemmers, as well as a WordNet lemmatizer, all using the Natural Language Toolkit (http://nltk.org/, Bird et al. 2009). Code is in __init__.py, output is in out.txt. 
 
 Stemmers and Lammatizers compress different word forms into a single word root. Oftentimes in information retrieval you are representing documents based on what words are within them, but something like stemming admits that different words can mean practically the same thing. For example, *walk* is, for many purposes, the same thing as *walking*, *walked*, and *walks*.
