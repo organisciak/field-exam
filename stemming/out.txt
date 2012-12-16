@@ -1,0 +1,23 @@
+STEMMER 		POLICY	POLICIES POLICE	RETRIEVAL	RETRIEVED	RETRIEVER
+<LancasterStemmer> 	policy 	policy 	pol 	retriev 	retriev 	retriev 	
+<PorterStemmer> 	polici 	polici 	polic 	retriev 	retriev 	retriev 	
+<EnglishStemmer> 	polici 	polici 	polic 	retriev 	retriev 	retriev 	
+<WordNetLemmatizer> 	policy 	policy 	police 	retrieval 	retrieved 	retriever 	
+
+STEMMER 		POLICY	POLICIES POLICE	RETRIEVAL	RETRIEVED	RETRIEVER
+<LancasterStemmer> 	policy 	policy 	pol 	retriev 	retriev 	retriev 	
+<PorterStemmer> 	polici 	polici 	polic 	retriev 	retriev 	retriev 	
+<EnglishStemmer> 	polici 	polici 	polic 	retriev 	retriev 	retriev 	
+<WordNetLemmatizer> 	policy 	policy 	police 	retrieval 	retrieved 	retriever 	
+
+STEMMER 		GO	GOING	GOED	WENT	SWIM	SWAM	WALKED	WALKING	WALK	GIVE	GAVE
+<LancasterStemmer> 	go 	going 	goed 	went 	swim 	swam 	walk 	walk 	walk 	giv 	gav 	
+<PorterStemmer> 	go 	go 	go 	went 	swim 	swam 	walk 	walk 	walk 	give 	gave 	
+<EnglishStemmer> 	go 	go 	go 	went 	swim 	swam 	walk 	walk 	walk 	give 	gave 	
+<WordNetLemmatizer> 	go 	going 	goed 	went 	swim 	swam 	walked 	walking	walk 	give 	gave 	
+
+STEMMER 		GEESE	GOOSE	OCTOPUSES	OCTOPI	OCTOPODES
+<LancasterStemmer> 	gees 	goos 	octopus 	octop 	octopod 	
+<PorterStemmer> 	gees 	goos 	octopus 	octopi 	octopod 	
+<EnglishStemmer> 	gees 	goos 	octopus 	octopi 	octopod 	
+<WordNetLemmatizer> 	goose 	goose 	octopus 	octopus	octopodes 	
