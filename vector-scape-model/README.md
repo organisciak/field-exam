@@ -5,6 +5,7 @@ The vector space model (Salton et al. 1975) is a classic information retrieval m
 
 To understand the vector space model, imagine a very simple set of documents, where all we look at is the occurrances of the words *car* and *safety*. If you counted up all these in three documents, you might find that D1=(1,3), Doc2=(4,2), and Doc3=(6,5). This is easy to imagine, because there are two dimensions. For example:
 
+```
 Car
  |          *
  |
@@ -12,7 +13,8 @@ Car
  |      *
   _ _ _ _ _ _ Safety
 
-(Note that these are vectors, not points, I wasn't going to try to draw ASCII lines).
+Note that these are vectors, not points, but I wasn't going to try to draw ASCII lines.
+```
 
 With documents represented like this, we can measure similarity between the vectors. Essentially: which ones are closer together? If we increase the complexity to 3-dimensions (looking at three words) you can still visualize them, and the calculations stay the same. This keeps going into larger dimensions until you're representing each document as a vector of how many times each possible word occurs. Even though you can no longer visualize this, similarity measures still hold.
 
