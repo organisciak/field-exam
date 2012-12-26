@@ -2,4 +2,7 @@ PDFs
 .DS_Store
 *.*~
 *.pyc
-/code/tfidf/year/*.gz
+/*/year/*.gz
+.Rapp.history
+.RData
+.Rhistory
