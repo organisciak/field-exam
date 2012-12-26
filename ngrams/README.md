@@ -1,6 +1,14 @@
-ngam.sh parse the Google English One Million ngram data into year by year gz files, making it easier an more efficient to do lookups in them.
+#Google Books corpus-based term frequencies.
+##Overview
+The following scripts are included here:
+ * [NGram.sh](#NGram.sh) - Split Google's English One Million dataset into compressed year by year files, making lookups easy. 
 
-Download the data here:
+##NGram.sh
+ngram.sh parses the Google English One Million ngram dataset into a more manageable collection of compressed gzip files, separated by year. 
+
+This enables more efficient lookups against Google's large ngrams data. This is due to two reason: first, by having a large number of smaller files, looking up ngram data for a specific year doesn't need to process multiple gb of data. Secondly, by compress the files with GZip, one can perform faster searches on Linux or Unix systems (including Mac OS) using zgrep.
+
+Download the Google One Million NGram dataset for processing here:
 http://storage.googleapis.com/books/ngrams/books/datasetsv2.html
 
  Usage:
