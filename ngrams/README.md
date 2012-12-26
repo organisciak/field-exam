@@ -1,7 +1,7 @@
 #Google Books corpus-based term frequencies.
 ##Overview
 The following scripts are included here:
- * [NGram.sh](#NGram.sh) - Split Google's English One Million dataset into compressed year by year files, making lookups easy. 
+ * [NGram.sh](#ngramsh) - Split Google's English One Million dataset into compressed year by year files, making lookups easy. 
 
 ##NGram.sh
 ngram.sh parses the Google English One Million ngram dataset into a more manageable collection of compressed gzip files, separated by year. 
@@ -11,7 +11,7 @@ This enables more efficient lookups against Google's large ngrams data. This is 
 Download the Google One Million NGram dataset for processing here:
 http://storage.googleapis.com/books/ngrams/books/datasetsv2.html
 
- Usage:
+###Usage:
  ./ngram.sh IN START END OUT
        IN - folder where the zip files are kept. This script reads all of them
        START - First year to process
@@ -24,13 +24,13 @@ http://storage.googleapis.com/books/ngrams/books/datasetsv2.html
 To run the script, you point it at a folder where the 1-gram zip files are. Note that the script assumes that there are no other .zip files in the input folder.
 You also specify the folder where the final gzips will go and the start and end dates to create archives for. The output folder needs to already exist.
 
-Output
+###Output
 The output of the files will be a series of gz files in the output folder, named by year: e.g. 1990.gz.
 
 You don't need to decompress gz files to search within them. For example, to find the frequencies for "church" in 1990:
 
  zgrep -P "^church\t" 1990.gz 
 
-Additional Notes
+###Additional Notes
 Since the 1-grams of the English One Million corpus are .zip and the 2-5 grams are gz, this script will not work on those. 
 The script creates in intermediary unzipped file, for performance. Keeping it in memory was too slow and piping it meant unzipping files more than one. 
