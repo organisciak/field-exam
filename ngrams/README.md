@@ -42,18 +42,18 @@ Lookup frequency data in Google N-Grams data. Includes a class for individual lo
 Requires zgrep on the OS (included in Mac OS and Linux).
 
 ###COMMAND-LINE USAGE###
-usage: termFreq.py [-h] [--alpha_split ALPHA_SPLIT] [--year_split YEAR_SPLIT]
+usage: termFreq.py [-h] [--split_alpha ALPHA_SPLIT] [--split_year YEAR_SPLIT]
                    [--year YEAR] [--count_regex COUNT_REGEX] [--tally TALLY]
                    
 ###CLASS USAGE###
 Instantiate the googleLockup class with :
-    g = googleLookup(infile[, alpha_split=False, year_split=False])
+    g = googleLookup(infile[, split_alpha=False, split_year=False])
     PARAMETERS
         infile: the directory where the gz files are kept or, if there is only one file,
                 the path to that file.
-        year_split: whether the files are split by their year. e.g. infile/year.gz
-        alpha_split: whether the files are split by the first character of the alphabet. e.g.
-                infile/A.gz (if year_split is False) or infile/A/YEAR.gz
+        split_year: whether the files are split by their year. e.g. infile/year.gz
+        split_alpha: whether the files are split by the first character of the alphabet. e.g.
+                infile/A.gz (if split_year is False) or infile/A/YEAR.gz
                 
 Lookup a query with:
     g.query(query, year=None, count_regex=None, tally = True)
@@ -68,10 +68,10 @@ Lookup a query with:
             are returned.
     
 ####EXAMPLES
-    g = googleLookup("year", year_split=True) 
+    g = googleLookup("year", split_year=True) 
     #print g.query("test", tally=False)              # Error, need year
     print g.query("test", year=1990, tally=False)
-    g = googleLookup("year/1990.gz", year_split=False)
+    g = googleLookup("year/1990.gz", split_year=False)
     print g.query("test", tally=True, count_regex="\d{5,10}")
     print g
     print g.get_last()

@@ -10,18 +10,18 @@ Lookup frequency data in Google N-Grams data. Includes a class for individual lo
 Requires zgrep on the OS (included in Mac OS and Linux).
 
 ###COMMAND-LINE USAGE###
-usage: termFreq.py [-h] [--alpha_split ALPHA_SPLIT] [--year_split YEAR_SPLIT]
+usage: termFreq.py [-h] [--split_alpha ALPHA_SPLIT] [--split_year YEAR_SPLIT]
                    [--year YEAR] [--count_regex COUNT_REGEX] [--tally TALLY]
                    
 ###CLASS USAGE###
 Instantiate the googleLockup class with :
-    g = googleLookup(infile[, alpha_split=False, year_split=False])
+    g = googleLookup(infile[, split_alpha=False, split_year=False])
     PARAMETERS
         infile: the directory where the gz files are kept or, if there is only one file,
                 the path to that file.
-        year_split: whether the files are split by their year. e.g. infile/year.gz
-        alpha_split: whether the files are split by the first character of the alphabet. e.g.
-                infile/A.gz (if year_split is False) or infile/A/YEAR.gz
+        split_year: whether the files are split by their year. e.g. infile/year.gz
+        split_alpha: whether the files are split by the first character of the alphabet. e.g.
+                infile/A.gz (if split_year is False) or infile/A/YEAR.gz
                 
 Lookup a query with:
     g.query(query, year=None, count_regex=None, tally = True)
@@ -36,10 +36,10 @@ Lookup a query with:
             are returned.
     
 EXAMPLES
-    g = googleLookup("year", year_split=True) 
+    g = googleLookup("year", split_year=True) 
     #print g.query("test", tally=False)              # Error, need year
     print g.query("test", year=1990, tally=False)
-    g = googleLookup("year/1990.gz", year_split=False)
+    g = googleLookup("year/1990.gz", split_year=False)
     print g.query("test", tally=True, count_regex="\d{5,10}")
     print g
     print g.get_last()
@@ -58,28 +58,28 @@ class googleLookup(object):
     For performance, zgrep is used. As a result, on *nix systems are supported.
     '''
 
-    def __init__(self, infile, alpha_split=False, year_split=False):
+    def __init__(self, infile, split_alpha=False, split_year=False):
         '''
         Constructor
         '''
         self.input = os.path.join(os.getcwd(), infile) #Either the gz file being queried or the top level folder
         
-        #Structure of archives. If alpha_split and year_split are off, it searches a file specified in self.inpit.
-        #If year_split is one, it searches in YEAR.gz, within either self.input/ (if alpha_split is off) or self.input/X/
-        self.alpha_split = alpha_split  #Whether the archives are split by alphabet.
-        self.year_split = year_split    #Whether the archives are split by year
+        #Structure of archives. If split_alpha and split_year are off, it searches a file specified in self.inpit.
+        #If split_year is one, it searches in YEAR.gz, within either self.input/ (if split_alpha is off) or self.input/X/
+        self.split_alpha = split_alpha  #Whether the archives are split by alphabet.
+        self.split_year = split_year    #Whether the archives are split by year
     
     def _path(self, q, year=None):
-        if self.alpha_split and self.year_split:
+        if self.split_alpha and self.split_year:
             # e.g. input/q/1990.gz
             return os.path.join(self.input, q[0], str(year)+".gz")
-        elif self.alpha_split and not self.year_split:
+        elif self.split_alpha and not self.split_year:
             # e.g. input/q.gz
             return os.path.join(self.input, q[0]+".gz")
-        elif not self.alpha_split and self.year_split:
+        elif not self.split_alpha and self.split_year:
             # e.g. input/1990.gz
             return os.path.join(self.input, str(year)+".gz")
-        elif not self.alpha_split and not self.year_split:
+        elif not self.split_alpha and not self.split_year:
             # e.g. input.gz // Assumes that a filename was given for input
             return self.input
             
@@ -118,8 +118,8 @@ class googleLookup(object):
         return freqs
     
     def query(self, q, year=None, count_regex=None, tally = True):
-        if self.year_split and year is None:
-            raise TypeError('If year_split is on, a year is needed.')
+        if self.split_year and year is None:
+            raise TypeError('If split_year is on, a year is needed.')
         out = self._lookup(q, year, count_regex)
         self._last = {"q":q, "year":year, "count_regex": count_regex, "out":out}
         if out == "" or out is None:
@@ -144,8 +144,8 @@ class multipleLookup(googleLookup):
     Same as googleLookup, but takes a list of queries or years.
     '''
     def query(self, queries, years=None, count_regex=None, tally = True):
-        if self.year_split and years is None:
-            raise TypeError('If year_split is on, a year is needed.')
+        if self.split_year and years is None:
+            raise TypeError('If split_year is on, a year is needed.')
         
         out = ""
         if queries is None:
@@ -181,7 +181,7 @@ def total_freqs(infile):
     return dict([(b.split("\t")[0], b.split("\t")[1:4]) for b in total_counts.splitlines()])
 
 if __name__ == '__main__':  
-    #m = multipleLookup("year", year_split=True)
+    #m = multipleLookup("year", split_year=True)
     #print m.query(None, range(1790,2001, 10), count_regex="\d{4,10}", tally=False)
     
     ## This class can be run directly from the command-line
@@ -189,13 +189,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument(dest="infile",   help="directory of gz files, or path to single file")
     parser.add_argument(dest="query", help="term to search for")
-    parser.add_argument("--alpha_split", dest="alpha_split", type=bool, default=False, help="whether files are split by the first character of a term")
-    parser.add_argument("--year_split", dest="year_split", type=bool, default=False, help="whether files are split by the year")
-    parser.add_argument("--year", dest="year", type=int, default=None, help="year to query")
-    parser.add_argument("--count_regex", dest="count_regex", type=str, default=None, help="regex on the count field")
-    parser.add_argument("--tally", dest="tally", type=bool, default=True, help="whether to add up frequencies")
+    parser.add_argument("-sa", "--split_alpha", dest="split_alpha", help="whether files are split by the first character of a term", action='store_true')
+    parser.add_argument("-sy", "--split_year", dest="split_year", help="whether files are split by the year", action='store_true')
+    parser.add_argument("-y", "--year", dest="year", type=int, default=None, help="year to query")
+    parser.add_argument("-re", "--count_regex", dest="count_regex", type=str, default=None, help="regex on the count field")
+    parser.add_argument("-t", "--tally", dest="tally", type=bool, default=True, help="whether to add up frequencies")
 
     args = parser.parse_args()
     
-    g = googleLookup(args.infile, alpha_split=args.alpha_split, year_split=args.year_split) 
+    g = googleLookup(args.infile, split_alpha=args.split_alpha, split_year=args.split_year) 
     print g.query(args.query, year=args.year, tally=args.tally, count_regex=args.count_regex)
