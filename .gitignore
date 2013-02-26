@@ -6,3 +6,5 @@ PDFs
 .Rapp.history
 .RData
 .Rhistory
+.swp
+*.swp
